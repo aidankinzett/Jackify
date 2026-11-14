@@ -1,5 +1,20 @@
 # Jackify Changelog
 
+## v0.8.1.3.1 - Fork release (aidankinzett/Jackify)
+**Release Date:** 14/11/26
+
+Based on upstream v0.8.1.3.
+
+- Added built-in support for The Witcher 3. Witcher 3 modlists no longer need to be installed as
+  "Other" and now get full post-install configuration: Steam shortcut, Proton prefix setup and
+  ModOrganizer.ini paths. Works with both jackify-engine and CLF3, including GOG installs found
+  through Heroic.
+- Modlists installed from a .wabbajack file can now be updated from the Dashboard. Update in the
+  modlist's Properties asks for the new .wabbajack file, then opens Install Modlist with the file,
+  name, install directory and downloads directory filled in. The update prompt now shows the
+  version change for file installs too.
+- Update checks now use this fork's GitHub releases instead of upstream's.
+
 ## v0.8.1.3 - Hotfix
 **Release Date:** 06/10/26
 

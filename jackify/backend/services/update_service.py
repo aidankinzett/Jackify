@@ -37,6 +37,9 @@ class UpdateInfo:
     github_download_url: Optional[str] = None
 
 
+UPSTREAM_GITHUB_REPO = "Omni-guides/Jackify"
+
+
 class UpdateService:
     """Service for checking and applying Jackify updates."""
     
@@ -48,7 +51,9 @@ class UpdateService:
             current_version: Current version of Jackify (e.g. "0.1.1")
         """
         self.current_version = current_version
-        self.github_repo = "Omni-guides/Jackify"
+        # Fork build: update from this fork's releases, not upstream's, so an upstream release
+        # can't replace this build and silently drop fork-only features.
+        self.github_repo = "aidankinzett/Jackify"
         self.github_api_base = "https://api.github.com"
         self.update_check_timeout = 10  # seconds
 
@@ -106,7 +111,12 @@ class UpdateService:
                 
                 if download_url:
                     github_url = download_url
-                    nexus_url = self._try_nexus_download_url(latest_version)
+                    # The Nexus page is upstream's - only use it when updating from upstream,
+                    # or a fork version that matches an upstream version would pull upstream's file.
+                    nexus_url = (
+                        self._try_nexus_download_url(latest_version)
+                        if self.github_repo == UPSTREAM_GITHUB_REPO else None
+                    )
                     update_source = "github"
                     if nexus_url:
                         download_url = nexus_url
