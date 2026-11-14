@@ -222,6 +222,7 @@ class ModlistConfigurationMixin:
                     "bg3": "bg3",
                     "baldursgate3": "bg3",
                     "cp2077": "cp2077",
+                    "witcher3": "witcher3",
                     "starfield": "starfield",
                 }
                 game_name = game_name_map.get((self.game_var or '').lower(), None)

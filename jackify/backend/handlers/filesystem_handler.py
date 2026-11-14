@@ -530,7 +530,16 @@ class FileSystemHandler(
                     str(compatdata_path), "pfx", "drive_c", "users", "steamuser"
                 )
 
-                if game_name in appdata_only_dirs:
+                if game_name == "witcher3":
+                    # Witcher 3 uses Documents/The Witcher 3 (MO2 plugin's GameDocumentsDirectory)
+                    w3_docs = os.path.join(prefix_user, "Documents", "The Witcher 3", "gamesaves")
+                    try:
+                        os.makedirs(w3_docs, exist_ok=True)
+                        self.logger.info(f"Created Wine prefix Documents directory: {w3_docs}")
+                    except Exception as e:
+                        self.logger.warning(f"Could not create Wine prefix Documents directory {w3_docs}: {e}")
+
+                elif game_name in appdata_only_dirs:
                     appdata_path = os.path.join(
                         prefix_user, "AppData", "Local", appdata_only_dirs[game_name]
                     )

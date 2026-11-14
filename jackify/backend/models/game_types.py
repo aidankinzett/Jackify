@@ -16,6 +16,7 @@ GAME_DISPLAY_NAMES: dict[str, str] = {
     'fallout4vr': 'Fallout 4 VR',
     'bg3': "Baldur's Gate 3",
     'cp2077': 'Cyberpunk 2077',
+    'witcher3': 'The Witcher 3',
 }
 
 # Maps lowercased human-readable / alternate name -> canonical game_type
@@ -47,6 +48,14 @@ GAME_NAME_TO_TYPE: dict[str, str] = {
     'cyberpunk 2077': 'cp2077',
     'cyberpunk2077': 'cp2077',
     'cp2077': 'cp2077',
+    # Wabbajack's gallery calls it "Witcher 3"; MO2's game plugin writes
+    # gameName=The Witcher 3: Wild Hunt into ModOrganizer.ini.
+    'witcher 3': 'witcher3',
+    'witcher3': 'witcher3',
+    'the witcher 3': 'witcher3',
+    'the witcher 3: wild hunt': 'witcher3',
+    'the witcher 3 wild hunt': 'witcher3',
+    'witcher 3: wild hunt': 'witcher3',
 }
 
 

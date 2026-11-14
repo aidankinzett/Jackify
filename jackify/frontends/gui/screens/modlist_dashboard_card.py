@@ -67,6 +67,7 @@ _GAME_THUMB_STYLE = {
     'starfield': ("#2e4a4a", "SF"),
     'bg3': ("#5c3d2e", "BG3"),
     'cp2077': ("#5c2e50", "CP"),
+    'witcher3': ("#4a4a2e", "W3"),
 }
 _GAME_THUMB_DEFAULT = ("#333333", "?")
 

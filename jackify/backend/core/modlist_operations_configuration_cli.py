@@ -58,7 +58,7 @@ class ModlistOperationsConfigurationCLIMixin:
         else:
             self.logger.debug("configuration_phase: ModOrganizer.ini not found")
 
-        supported_games = ["Skyrim Special Edition", "Fallout 4", "Fallout New Vegas", "Oblivion", "Starfield", "Oblivion Remastered", "Enderal"]
+        supported_games = ["Skyrim Special Edition", "Fallout 4", "Fallout New Vegas", "Oblivion", "Starfield", "Oblivion Remastered", "Enderal", "The Witcher 3"]
         is_tuxborn = self.context.get('machineid') == 'Tuxborn/Tuxborn'
         self.logger.debug(f"configuration_phase: detected_game='{detected_game}', is_tuxborn={is_tuxborn}")
         self.logger.debug(f"configuration_phase: Checking condition: (detected_game in supported_games) or is_tuxborn")

@@ -43,6 +43,7 @@ GAME_STEAM_APP_IDS = {
     "starfield":           "1716740",
     "cp2077":              "1091500",
     "bg3":                 "1086940",
+    "witcher3":            "292030",
 }
 
 # Artwork slots: (endpoint_path, query_string, dest_filename)

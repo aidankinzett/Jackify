@@ -280,6 +280,8 @@ class ModlistWineOpsMixin:
             extras += ["d3dx9_43", "d3dx9", "d3dcompiler_43", "d3dcompiler_47"]
         elif "cp2077" in game or "cyberpunk" in game:
             extras += ["d3dcompiler_47", "d3dx11_43", "d3dcompiler_43", "dotnet6", "dotnet7", "dotnet8", "dotnet9", "dotnetdesktop6", "dotnetdesktop9"]
+        elif "witcher3" in game:
+            extras += ["d3dcompiler_47", "d3dx11_43", "d3dcompiler_43", "dotnet6", "dotnet7", "dotnet8", "dotnet9", "dotnetdesktop6", "dotnetdesktop9"]
         elif "bg3" in game or "baldursgate" in game:
             extras += ["d3dcompiler_47", "d3dx11_43", "d3dcompiler_43", "dotnet6", "dotnet7", "dotnet8", "dotnet9", "dotnetdesktop6", "dotnetdesktop9"]
         else:

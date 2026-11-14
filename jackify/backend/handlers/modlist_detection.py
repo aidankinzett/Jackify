@@ -326,6 +326,9 @@ class ModlistDetectionMixin:
                     if 'cyberpunk 2077' in content or 'cyberpunk2077' in content or 'cp2077' in content:
                         self.logger.info("Detected Cyberpunk 2077 via ModOrganizer.ini markers")
                         return "cp2077"
+                    if 'witcher 3' in game_name_value or 'witcher3.exe' in content:
+                        self.logger.info("Detected The Witcher 3 via ModOrganizer.ini markers")
+                        return "witcher3"
                     if "baldur's gate 3" in content or 'baldursgate3' in content or 'bg3' in content:
                         self.logger.info("Detected Baldur's Gate 3 via ModOrganizer.ini markers")
                         return "bg3"
@@ -368,6 +371,9 @@ class ModlistDetectionMixin:
             if cp2077_exe.exists():
                 self.logger.info(f"Detected Cyberpunk 2077 modlist: found Cyberpunk2077.exe in '{base}'")
                 return "cp2077"
+            if (base / "bin" / "x64" / "witcher3.exe").exists():
+                self.logger.info(f"Detected The Witcher 3 modlist: found bin/x64/witcher3.exe in '{base}'")
+                return "witcher3"
             bg3_exe = base / "bg3.exe"
             bg3_dx11_exe = base / "bg3_dx11.exe"
             if bg3_exe.exists() or bg3_dx11_exe.exists():
@@ -399,6 +405,9 @@ class ModlistDetectionMixin:
                 if 'cyberpunk' in gt or 'cp2077' in gt:
                     self.logger.info("Heuristic detection: game_var indicates Cyberpunk 2077")
                     return "cp2077"
+                if 'witcher 3' in gt or 'witcher3' in gt:
+                    self.logger.info("Heuristic detection: game_var indicates The Witcher 3")
+                    return "witcher3"
                 if "baldur" in gt or 'bg3' in gt:
                     self.logger.info("Heuristic detection: game_var indicates BG3")
                     return "bg3"

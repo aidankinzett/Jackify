@@ -149,7 +149,21 @@ class GameUtilsMixin:
         if special_game_type is None and modlist_dir and self._detect_skyrim_se_modlist(modlist_dir):
             game_type = "skyrim"
 
+        # Games that keep settings/saves directly under Documents (no My Games)
+        game_documents_only = {
+            "witcher3": os.path.join("The Witcher 3", "gamesaves"),
+        }
+
         base_path = os.path.join(modlist_compatdata_path, "pfx", "drive_c", "users", "steamuser")
+
+        if game_type in game_documents_only:
+            docs_dir = os.path.join(base_path, "Documents", game_documents_only[game_type])
+            try:
+                os.makedirs(docs_dir, exist_ok=True)
+                logger.info(f"Created Documents directory: {docs_dir}")
+            except Exception as e:
+                logger.warning(f"Failed to create Documents directory {docs_dir}: {e}")
+            return
 
         if game_type in game_appdata_only:
             appdata_dir = os.path.join(base_path, "AppData", "Local", game_appdata_only[game_type])

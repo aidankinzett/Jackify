@@ -102,6 +102,7 @@ GAME_KEYWORDS = {
     "fallout4vr": ["fallout 4 vr", "fallout4vr", "fo4vr"],
     "cp2077": ["cyberpunk", "cp2077", "cyberpunk 2077"],
     "bg3": ["baldur's gate 3", "baldursgate3", "bg3"],
+    "witcher3": ["witcher 3", "witcher3"],
     "skyrim": ["skyrim", "sse", "skse", "dragonborn"],
     "fallout4": ["fallout 4", "fo4", "f4se", "commonwealth"],
     "falloutnv": ["fallout new vegas", "fonv", "fnv", "new vegas", "nvse", "ttw", "tale of two wastelands"],
@@ -155,7 +156,7 @@ _WT_LEGACY = _WT_DEFAULT + ["d3dx9_43", "d3dx9"]
 GAME_WINETRICKS = {
     "skyrim": _WT_MODERN, "skyrimvr": _WT_MODERN, "fallout4": _WT_MODERN,
     "fallout4vr": _WT_MODERN, "starfield": _WT_MODERN, "oblivion_remastered": _WT_MODERN,
-    "enderal": _WT_MODERN, "cp2077": _WT_MODERN, "bg3": _WT_MODERN,
+    "enderal": _WT_MODERN, "cp2077": _WT_MODERN, "bg3": _WT_MODERN, "witcher3": _WT_MODERN,
     "falloutnv": _WT_LEGACY, "fallout3": _WT_LEGACY, "oblivion": _WT_LEGACY,
 }
 
@@ -1147,7 +1148,7 @@ def check_tool_compat_config(pfx: Path, game_type: str, r: Results):
     # xEdit/Pandora/DLL-overrides/Synthesis fixes (see modlist_configuration.py
     # Step 15) - only the SkyrimSE.exe-scoped mscoree entry is skipped for it,
     # handled below.
-    _no_tool_compat = ("falloutnv", "fallout3", "cp2077", "bg3", "skyrimvr", "fallout4vr")
+    _no_tool_compat = ("falloutnv", "fallout3", "cp2077", "bg3", "witcher3", "skyrimvr", "fallout4vr")
     if game_type in _no_tool_compat:
         return
 

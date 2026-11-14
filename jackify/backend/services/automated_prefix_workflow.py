@@ -198,6 +198,8 @@ class WorkflowMixin:
             elif special_game_type == "bg3":
                 logger.info("Baldur's Gate 3 modlist detected")
                 logger.warning("BG3 modlists require Rootbuilder in COPY mode - verify this in MO2 plugin settings")
+            elif special_game_type == "witcher3":
+                logger.info("The Witcher 3 modlist detected - no special launch options required")
             elif special_game_type in ["skyrimvr", "fallout4vr"]:
                 game_label = "Skyrim VR" if special_game_type == "skyrimvr" else "Fallout 4 VR"
                 logger.warning("%s modlist detected - SteamVR must be installed and running for this modlist to work", game_label)

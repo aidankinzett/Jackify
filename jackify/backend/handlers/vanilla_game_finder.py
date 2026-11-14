@@ -54,7 +54,10 @@ _STEAM_CATALOG: Dict[str, List[SteamEntry]] = {
     ],
     'bg3': [SteamEntry('1086940', ['Baldurs Gate 3', "Baldur's Gate 3"])],
     'cp2077': [SteamEntry('1091500', ['Cyberpunk 2077'])],
-    'witcher3': [SteamEntry('292030', ['The Witcher 3 Wild Hunt', 'The Witcher 3: Wild Hunt'])],
+    'witcher3': [
+        SteamEntry('292030', ['The Witcher 3', 'The Witcher 3 Wild Hunt']),
+        SteamEntry('499450', ['The Witcher 3', 'The Witcher 3 Wild Hunt']),  # GOTY
+    ],
     'darksouls3': [SteamEntry('374320', ['DARK SOULS III'])],
     'eldenring': [SteamEntry('1245620', ['ELDEN RING'])],
     'sekiro': [SteamEntry('814380', ['Sekiro'])],
@@ -73,7 +76,7 @@ _HEROIC_GOG_CATALOG: Dict[str, List[str]] = {
     'morrowind':            ['1440163901'],
     'bg3':                  ['1456460669'],
     'cp2077':               ['1423049311'],
-    'witcher3':             ['1495134320'],
+    'witcher3':             ['1207664643', '1495134320', '1207664663', '1640424747'],
     'skyrim':               ['1711230643'],
     'stardewvalley':        ['1453375253'],
 }

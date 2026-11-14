@@ -34,13 +34,14 @@ class WabbajackParser:
             'EnderalSpecialEdition': 'enderal',
             'Cyberpunk2077': 'cp2077',
             'BaldursGate3': 'bg3',
+            'Witcher3': 'witcher3',
         }
 
         # List of supported games in Jackify
         self.supported_games = [
             'skyrim', 'fallout4', 'falloutnv', 'fallout3', 'oblivion',
             'starfield', 'oblivion_remastered', 'enderal',
-            'skyrimvr', 'fallout4vr', 'bg3',
+            'skyrimvr', 'fallout4vr', 'bg3', 'witcher3',
         ]
     
     def parse_wabbajack_game_type(self, wabbajack_path: Path) -> Optional[tuple]:
@@ -206,6 +207,7 @@ class WabbajackParser:
             'fallout4vr': 'Fallout 4 VR',
             'cp2077': 'Cyberpunk 2077',
             'bg3': "Baldur's Gate 3",
+            'witcher3': 'The Witcher 3',
         }
         return [display_names.get(game, game) for game in self.supported_games]
 

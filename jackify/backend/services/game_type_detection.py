@@ -57,6 +57,7 @@ _LOADER_MARKERS = (
     ("bg3.exe", "bg3"),
     ("bg3_dx11.exe", "bg3"),
     ("cyberpunk2077.exe", "cp2077"),
+    ("witcher3.exe", "witcher3"),
     ("skyrim special edition", "skyrim"),
     ("fallout 4", "fallout4"),
     ("fallout new vegas", "falloutnv"),
