@@ -2,6 +2,7 @@
 from PySide6.QtWidgets import QMessageBox
 import logging
 import os
+from pathlib import Path
 import shutil
 import time
 
@@ -27,7 +28,14 @@ class InstallWorkflowMixin(InstallWorkflowExecutionMixin, InstallWorkflowValidat
     _normalize_modlist_name = staticmethod(normalize_modlist_name)
 
     def _get_requested_modlist_version(self, install_mode: str) -> str | None:
-        """Return selected modlist version from gallery metadata when available."""
+        """Return the selected modlist's version: the .wabbajack file's own declared Version in
+        file mode, gallery metadata in online mode."""
+        if install_mode == "file":
+            path = self.file_edit.text().strip()
+            if not path or not os.path.isfile(path):
+                return None
+            from jackify.backend.handlers.wabbajack_parser import WabbajackParser
+            return normalize_version_token(WabbajackParser().parse_wabbajack_version(Path(path)))
         if install_mode != "online":
             return None
         info = getattr(self, "selected_modlist_info", None) or {}

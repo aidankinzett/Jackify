@@ -227,17 +227,7 @@ class ModlistSelectionMixin:
         self.source_tabs.setCurrentIndex(0)
         self.install_dir_edit.setText(install_dir)
         self.modlist_name_edit.setText(modlist_name)
-
-        # Reuse the existing install's own downloads directory (from ModOrganizer.ini) rather
-        # than leaving the screen's fresh-install default in place - an update should reuse
-        # already-downloaded archives, not point at an unrelated directory.
-        try:
-            from jackify.backend.services.nxm_downloader import resolve_mo2_download_dir
-            existing_downloads_dir = resolve_mo2_download_dir(Path(install_dir))
-            if existing_downloads_dir:
-                self.downloads_dir_edit.setText(str(existing_downloads_dir))
-        except Exception as e:
-            logger.warning("Could not resolve existing downloads directory for update prefill: %s", e)
+        self._prefill_existing_downloads_dir(install_dir)
 
         self.modlist_btn.setText("Finding modlist...")
         self.modlist_btn.setEnabled(False)
@@ -269,6 +259,29 @@ class ModlistSelectionMixin:
         )
         register_managed_thread(self._update_prefill_thread)
         self._update_prefill_thread.start()
+
+    def request_update_prefill_file(self, wabbajack_path: str, modlist_name: str, install_dir: str) -> None:
+        """Prefill the '.wabbajack File' tab for a Dashboard 'Update' on a file-installed
+        modlist (no gallery machine_url to look up). Same install_dir and name as the existing
+        install, so _check_update_mode's update-vs-new detection fires when the user clicks
+        Start, exactly as for the gallery path."""
+        self.source_tabs.setCurrentIndex(1)
+        self.file_edit.setText(wabbajack_path)
+        self.install_dir_edit.setText(install_dir)
+        self.modlist_name_edit.setText(modlist_name)
+        self._prefill_existing_downloads_dir(install_dir)
+
+    def _prefill_existing_downloads_dir(self, install_dir: str) -> None:
+        """Reuse the existing install's own downloads directory (from ModOrganizer.ini) rather
+        than leaving the screen's fresh-install default in place - an update should reuse
+        already-downloaded archives, not point at an unrelated directory."""
+        try:
+            from jackify.backend.services.nxm_downloader import resolve_mo2_download_dir
+            existing_downloads_dir = resolve_mo2_download_dir(Path(install_dir))
+            if existing_downloads_dir:
+                self.downloads_dir_edit.setText(str(existing_downloads_dir))
+        except Exception as e:
+            logger.warning("Could not resolve existing downloads directory for update prefill: %s", e)
 
     def _on_update_prefill_metadata_loaded(self, metadata_response, error, machine_url: str) -> None:
         self.start_btn.setEnabled(True)

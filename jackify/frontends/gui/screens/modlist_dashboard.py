@@ -451,13 +451,59 @@ class ModlistDashboardScreen(ThreadLifecycleMixin, FocusReclaimMixin, QWidget):
         returns STATUS_UPDATE_AVAILABLE when entry.machine_url is set (dashboard_status.py
         looks it up by machine_url), so this is reached with a machine_url in practice; the
         None check is a defensive fallback, not the expected path."""
-        if not self.stacked_widget or not entry.machine_url:
-            self._go_to_configure(entry)
+        if not self.stacked_widget:
+            return
+        if not entry.machine_url:
+            self._go_to_update_from_file(entry)
             return
         self._go_to_screen(self.install_modlist_index)
         screen = self.stacked_widget.widget(self.install_modlist_index)
         if hasattr(screen, "request_update_prefill"):
             screen.request_update_prefill(entry.machine_url, entry.modlist_name, entry.install_dir)
+
+    def _go_to_update_from_file(self, entry: InstallEntry):
+        """File-installed modlists have no gallery listing to update from - ask for the new
+        .wabbajack and hand it to Install Modlist's file tab. Update-vs-new detection and the
+        version-change prompt then run on Start, same as a gallery update."""
+        import os
+        from jackify.frontends.gui.utils import browse_file
+        start_dir = os.path.expanduser("~/Downloads")
+        if not os.path.isdir(start_dir):
+            start_dir = os.path.expanduser("~")
+        path = browse_file(
+            self, f"Select the new .wabbajack for {entry.modlist_name}", start_dir,
+            "Wabbajack Files (*.wabbajack)",
+        )
+        if not path:
+            return
+
+        from jackify.backend.handlers.wabbajack_parser import WabbajackParser
+        parsed = WabbajackParser().parse_wabbajack_game_type(Path(path))
+        if not parsed:
+            MessageService.warning(
+                self, "Invalid .wabbajack File",
+                "This file could not be read as a Wabbajack modlist. Select a different file.",
+            )
+            return
+        file_game_type = parsed[0] if isinstance(parsed, tuple) else parsed
+        if entry.game_type and file_game_type not in (None, "unknown") and file_game_type != entry.game_type:
+            from PySide6.QtWidgets import QMessageBox
+            from jackify.backend.models.game_types import GAME_DISPLAY_NAMES
+            reply = MessageService.question(
+                self, "Different Game",
+                f"This .wabbajack is for {GAME_DISPLAY_NAMES.get(file_game_type, file_game_type)}, "
+                f"but {entry.modlist_name} is a "
+                f"{GAME_DISPLAY_NAMES.get(entry.game_type, entry.game_type)} modlist.\n\n"
+                "Continue anyway?",
+                critical=False, safety_level="medium",
+            )
+            if reply != QMessageBox.Yes:
+                return
+
+        self._go_to_screen(self.install_modlist_index)
+        screen = self.stacked_widget.widget(self.install_modlist_index)
+        if hasattr(screen, "request_update_prefill_file"):
+            screen.request_update_prefill_file(path, entry.modlist_name, entry.install_dir)
 
     def _uninstall(self, entry: InstallEntry):
         provenance_note = (

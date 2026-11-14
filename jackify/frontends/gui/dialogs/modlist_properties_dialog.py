@@ -25,7 +25,11 @@ from jackify.backend.services.dashboard_images import (
     save_image_from_path,
 )
 from jackify.backend.services.crash_log_service import get_extender_name, supports_crash_logs
-from jackify.backend.services.dashboard_status import STATUS_UPDATE_AVAILABLE
+from jackify.backend.services.dashboard_status import (
+    STATUS_READY,
+    STATUS_UNKNOWN_VERSION,
+    STATUS_UPDATE_AVAILABLE,
+)
 from jackify.backend.services.install_registry import InstallEntry
 from ..services.message_service import MessageService
 from ..shared_theme import COLOR_BTN_BACK, COLOR_BTN_INSTALL, JACKIFY_COLOR_BLUE
@@ -268,8 +272,16 @@ class ModlistPropertiesDialog(QDialog):
         # Permanent, not conditional - greyed out when no update is available rather than
         # appearing/disappearing, so its position is predictable.
         update_btn = QPushButton("Update")
-        update_btn.setToolTip("Reinstall to the newer version available on the gallery.")
-        update_btn.setEnabled(self._status == STATUS_UPDATE_AVAILABLE)
+        # File installs have no gallery listing to compare against, so Update is always offered
+        # once configured and asks for the new .wabbajack file instead. provenance "jackify"
+        # means jackify_meta.json exists, which update-vs-new detection requires.
+        is_file_install = not self._entry.machine_url and self._entry.provenance == "jackify"
+        if is_file_install:
+            update_btn.setToolTip("Update this modlist from a newer .wabbajack file.")
+            update_btn.setEnabled(self._status in (STATUS_READY, STATUS_UNKNOWN_VERSION))
+        else:
+            update_btn.setToolTip("Reinstall to the newer version available on the gallery.")
+            update_btn.setEnabled(self._status == STATUS_UPDATE_AVAILABLE)
         update_btn.setStyleSheet(
             f"QPushButton {{ background-color: {JACKIFY_COLOR_BLUE}; color: white; "
             "border: none; border-radius: 4px; font-weight: bold; font-size: 12px; padding: 8px 16px; } "
